@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+        <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            text-align: center;
+        }
+    </style>
+    <title></title>
+<head>
+</head>
+<body>
+        <div class="container-fluid pt-3">
+            <div class="row pt-5">
+                <div class="col"></div>
+                <div class="col">
+                    <form action="{{  url_for('main') }}" method="post">
+                        <button class="btn btn-outline-primary">Go Back</button>
+                    </form>
+                </div>
+                <div class="col"></div>
+            </div>
+            <div class="row pt-5">
+                <div class="col">
+                Code Debug, result from Endpoint check:</div>
+            </div>
+            <div class="row pt-5">
+                <div class="col">{{ ep_data }}</div>
+            </div>
+            <div class="row pt-5">
+                <div class="col">
+                Code Debug, result from Endpoint registration:
+                
+                {{ result }}</div>
+            </div>
+        </div>
+
+
+</body>
+</html>

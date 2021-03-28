@@ -1,0 +1,48 @@
+<html lang="en">
+<head>
+    <title>Endpoint Registration Tool</title>
+</head>
+
+<body>
+        <div class="container-fluid pt-3">
+            <div class="row pt-5">
+                <div class="col"></div>
+                <div class="col"> <h3>MAC Address / Device registration</h3></div>
+                <div class="col"></div>
+            </div>
+            <div class="row pt-5">
+                <div class="col"></div>
+                <div class="col"><h5>Please select the ISE group:</h5></div>
+                <div class="col"></div>
+            </div>
+                <div class="row pt-5">
+                    <div class="col"></div>
+                    <div class="col">
+                    <form action="{{  url_for('check') }}" method="post">
+                        <div class="form-group">
+                            <select class="form-control" name="ise_group_id", id="ise_group_id">
+                                {% for key, value in ise_groups.items() %}
+                                     <option value="{{ value }}"> {{ key }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" name="location_choice", id="location_choice">
+                                {% for key, value in ipam_subnet.items() %}
+                                    {% for key2, value2 in value.items() %}
+                                        <option value="{{ value2["id"] }}"> {{ key2 }} - {{ value2["subnet"] }}</option>
+                                    {% endfor %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <input name="endpoint_mac" class="form-control" id="endpoint_mac_form" rows="1" placeholder="Enter endpoint mac-address" required>
+                        <p></p>
+                        <button class="btn btn-primary">Submit MAC Address</button>
+                    </form>
+                    </div>
+                    <div class="col"></div>
+            </div>
+        </div>
+        </div>
+</body>
+</html>

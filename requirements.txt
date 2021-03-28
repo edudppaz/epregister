@@ -1,0 +1,9 @@
+requests
+netaddr
+pypsrp
+pypsrp[kerberos]
+pypsrp[credssp]
+flask
+flask-bootstrap
+flask-session
+python-dotenv
