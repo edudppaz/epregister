@@ -12,7 +12,8 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 def get_api_groups(ise_url, username, password):
     headers = {"Accept": "application/json", "Content-Type": "application/json"}
-    url = ise_url + "endpointgroup/?filter=name.CONTAINS.API"
+    ise_tag = "_API_"
+    url = ise_url + "endpointgroup/?filter=name.CONTAINS." + ise_tag
     payload = {}
     response = requests.get(
         url, auth=(username, password), headers=headers, data=payload, verify=False
@@ -89,10 +90,10 @@ def get_mac_address():
     return mac
 
 
-def get_ipam_token(IPAM_URL, IPAM_APP, username, password):
+def get_ipam_token(ipam_url, ipam_app, username, password):
     print("Logging into IPAM and fetching token...\n")
     response = requests.post(
-        IPAM_URL + "/api/" + IPAM_APP + "/user/",
+        ipam_url + "/api/" + ipam_app + "/user/",
         auth=(username, password),
         verify=False,
     )
@@ -106,15 +107,15 @@ def get_ipam_token(IPAM_URL, IPAM_APP, username, password):
 
 
 def ipam_reserve_ip(
-    location_id, ep_mac, subnet, IPAM_URL, IPAM_APP, IPAM_API_TAG, TOKEN
+    location_id, ep_mac, subnet, ipam_url, ipam_app, ipam_api_tag, TOKEN
 ):
     # Get all addresses with the API tag)
     response = requests.get(
-        IPAM_URL
+        ipam_url
         + "/api/"
-        + IPAM_APP
+        + ipam_app
         + "/addresses/tags/"
-        + IPAM_API_TAG
+        + ipam_api_tag
         + "/addresses",
         headers={"token": TOKEN},
         verify=False,
@@ -128,20 +129,22 @@ def ipam_reserve_ip(
     if ep_mac.lower() in mac_list:
         reserved_ipam_subnet = subnet
         reserved_ipam_ip = ip_list[mac_list.index(ep_mac.lower())]
-        result = f"This endpoint was already reserved on IPAM with IP {reserved_ipam_ip} on subnet {reserved_ipam_subnet}"
+        result = (
+            f"This endpoint was already reserved on IPAM with IP {reserved_ipam_ip}"
+        )
         return reserved_ipam_ip, reserved_ipam_subnet, result
     else:
         # POST to reserve the first free IP address on the chosen location subnet #
         response = requests.post(
-            IPAM_URL
+            ipam_url
             + "/api/"
-            + IPAM_APP
+            + ipam_app
             + "/addresses/first_free/"
             + location_id
             + "/?mac="
             + ep_mac
             + "&tag="
-            + IPAM_API_TAG,
+            + ipam_api_tag,
             headers={"token": TOKEN},
             verify=False,
         )

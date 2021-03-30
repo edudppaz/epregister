@@ -2,33 +2,25 @@
 
 {% block title %}Endpoint Registration Tool{% endblock %}
 {% block content %}
+
 <body>
-        <div class="container pt-5">
-            <h3>MAC Address / Device registration</h3>
-            <h5>Please select the ISE group:</h5>
-            <p></p>
-            <form action="{{  url_for('register') }}" method="post">
-                <div class="form-group">
-                    <select class="form-control" name="ise_group_id", id="ise_group_id">
-                        {% for key, value in ise_groups.items() %}
-                            <option value="{{ key }}"> {{ key }}</option>
-                        {% endfor %}
-                    </select>
+    <div class="container pt-5">
+        <h3>MAC Address / Device registration</h3>
+        <h5>Please select the ISE group:</h5>
+        <p></p>
+        <form action="{{  url_for('register') }}" method="post">
+            <div class="form-group">
+                <select class="form-control" name="ise_group_id" , id="ise_group_id">
+                    {% for key, value in ise_groups.items() %}
+                    <option value="{{ key }}"> {{ key }}</option>
+                    {% endfor %}
+                </select>
                 <p></p>
-                <div class="form-group">
-                    <select class="form-control" name="location_choice", id="location_choice">
-                        {% for key, value in ipam_subnet.items() %}
-                            {% for key2, value2 in value.items() %}
-                                <option value="{{ key2 }}"> {{ key2 }} - {{ value2["subnet"] }}</option>
-                            {% endfor %}
-                        {% endfor %}
-                    </select>
-                </div>
-                <p></p>
-                <input name="endpoint_mac" class="form-control" id="endpoint_mac_form" rows="1" placeholder="Enter endpoint mac-address" required>
+                <input name="endpoint_mac" class="form-control" id="endpoint_mac_form" rows="1"
+                    placeholder="Enter endpoint mac-address" required>
                 <p></p>
                 <button class="btn btn-primary">Submit MAC Address</button>
-            </form>
-        </div>
+        </form>
+    </div>
 </body>
 {% endblock %}
