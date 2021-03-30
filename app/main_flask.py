@@ -38,10 +38,10 @@ def register():
     endpoint_mac = request.form.get("endpoint_mac")
     location_choice = request.form.get("location_choice")
     ise_chosen_group = request.form.get("ise_group_id")
-    ise_chosen_group_id = ise_groups[ise_chosen_group]
+    ise_chosen_group_id = ise_db[ise_chosen_group]
 
-    session["location_id"] = ipam_subnet[ise_chosen_group][location_choice]["id"]
-    session["subnet"] = ipam_subnet[ise_chosen_group][location_choice]["subnet"]
+    # session["location_id"] = ipam_subnet[ise_chosen_group][location_choice]["id"]
+    # session["subnet"] = ipam_subnet[ise_chosen_group][location_choice]["subnet"]
     session["endpoint_mac"] = endpoint_mac
 
     ep_on_ise = check_ep_exists(ise_url, endpoint_mac, username, password)
