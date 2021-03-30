@@ -8,6 +8,7 @@ from flask_bootstrap import Bootstrap
 from os import environ
 import config
 import getpass
+import pprint
 
 """
 The Following environment variables need to be set for the
@@ -29,8 +30,7 @@ Bootstrap(app)
 
 @app.route("/", methods=["GET", "POST"])
 def main():
-    print(f"Username: {username}")
-    return render_template("main.html", ise_groups=ise_groups, ipam_subnet=ipam_subnet)
+    return render_template("main.html", ise_groups=ise_db, ipam_subnet=ipam_subnet)
 
 
 @app.route("/register-endpoint", methods=["POST"])
@@ -86,4 +86,6 @@ def ipam():
 if __name__ == "__main__":
     username = environ.get("FLASK_APP_ERS_USERNAME")
     password = environ.get("FLASK_APP_ERS_PASSWORD")
+    ise_db = get_api_groups(ise_url, username, password)
+    pprint.pprint(ise_db)
     app.run()
