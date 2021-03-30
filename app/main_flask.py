@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 
 #from pypsrp.client import Client
-from ipam_vars import *
-from ise_vars import *
+from integration_info import *
 from functions import *
 from flask import Flask, render_template, request, session
 from flask_bootstrap import Bootstrap
