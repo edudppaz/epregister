@@ -59,3 +59,33 @@ def get_ipam_token(IPAM_URL, IPAM_APP, username, password):
 
     # Retreive Token if succesful
     return response.json()['data']['token']
+
+def ipam_reserve_ip(location_id, ep_mac, subnet, IPAM_URL, IPAM_APP, IPAM_API_TAG, TOKEN):
+    #Get all addresses with the API tag)
+    response = requests.get(IPAM_URL + "/api/" + IPAM_APP + "/addresses/tags/" + IPAM_API_TAG + "/addresses", headers={'token': TOKEN}, verify=False)
+    mac_list = []
+    ip_list = []
+    for addr in response.json()['data']:
+        mac_list.append(addr["mac"])
+        ip_list.append(addr["ip"])
+    # The MAC addresses come in lowercases from IPAM, so we convert ep_mac to lowercase #
+    if ep_mac.lower() in mac_list:
+        reserved_ipam_subnet = subnet
+        reserved_ipam_ip = ip_list[mac_list.index(ep_mac.lower())]
+        result = (f"This endpoint was already reserved on IPAM with IP {reserved_ipam_ip} on subnet {reserved_ipam_subnet}")
+        return reserved_ipam_ip, reserved_ipam_subnet, result
+    else:
+    # POST to reserve the first free IP address on the chosen location subnet #
+        response = requests.post(IPAM_URL + "/api/" + IPAM_APP + "/addresses/first_free/" + location_id + "/?mac=" + ep_mac + "&tag=" + IPAM_API_TAG, headers={'token': TOKEN}, verify=False)
+    # Registers response information in a variable #
+        ipam_response = response.json()
+    # If the response us OK, then the IP is registered and we save the values #
+        if ipam_response['success'] == True:
+            reserved_ipam_subnet =  subnet
+            reserved_ipam_ip = ipam_response['data']
+            result = (f"The reserved ip address is {reserved_ipam_ip} from subnet {reserved_ipam_subnet}\n\n\n")
+            return reserved_ipam_ip, reserved_ipam_subnet, result
+        # If the operation failed, we present the message to the user #
+        elif ipam_response['success'] == False:
+            result = (ipam_response['message'])
+            return "none","none",result

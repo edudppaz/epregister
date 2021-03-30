@@ -1,0 +1,36 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}Endpoint Registration Tool{% endblock %}
+{% block content %}
+<body>
+        <div class="container-fluid pt-3">
+            <div class="row pt-5">
+                <div class="col"></div>
+                <div class="col">Code Debug, result from Endpoint check:</div>
+                <div class="col"></div>
+            </div>
+            <div class="row pt-5">
+                <div class="col">{{ reserved_ipam_ip }}</div>
+            </div>
+            <div class="row pt-5">
+                <div class="col"></div>
+                <div class="col">Code Debug, result from Endpoint registration:</div>
+                <div class="col">{{ reserved_ipam_subnet }}</div>
+            </div>
+            <div class="row pt-5">
+                <div class="col"></div>
+                <div class="col">Code Debug, result from Endpoint registration:</div>
+                <div class="col">{{ result }}</div>
+            </div>
+            <div class="row pt-5">
+                <div class="col"></div>
+                <div class="col">
+                    <form action="{{  url_for('main') }}" method="post">
+                        <button class="btn btn-primary">Go back</button>
+                    </form>
+                </div>
+                <div class="col"></div>
+            </div>
+        </div>
+    </body>
+{% endblock %}

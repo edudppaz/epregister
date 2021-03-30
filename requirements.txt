@@ -7,3 +7,4 @@ flask
 flask-bootstrap
 flask-session
 python-dotenv
+black
