@@ -1,4 +1,3 @@
-headers= {'Accept': 'application/json', 'Content-Type': 'application/json'}
 ise_ip = '10.11.10.67'
 ise_url= "https://"+ise_ip+":9060/ers/config/"
 ise_groups= {

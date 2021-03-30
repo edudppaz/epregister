@@ -26,13 +26,13 @@ def main():
 def check():
     endpoint_mac = request.form.get("endpoint_mac")
     ise_chosen_group_id = request.form.get("ise_group_id")
-    ep_on_ise = check_ep_exists(ise_url, endpoint_mac, headers, username, password)
+    ep_on_ise = check_ep_exists(ise_url, endpoint_mac, username, password)
     ## If endpoint does not exist, we register a new endpoint on the correct group #
     if ep_on_ise['SearchResult']['total'] == 0:
-        register_ep, result = register_ep_ise (ise_url, endpoint_mac, headers, ise_chosen_group_id, username, password)
+        register_ep, result = register_ep_ise (ise_url, endpoint_mac, ise_chosen_group_id, username, password)
     elif ep_on_ise['SearchResult']['total'] == 1:
         endpoint_id = ep_on_ise['SearchResult']['resources'][0]['id']
-        updated_response, result = update_ep_ise (ise_url, endpoint_mac, headers, endpoint_id, ise_chosen_group_id, username, password)
+        updated_response, result = update_ep_ise (ise_url, endpoint_mac, endpoint_id, ise_chosen_group_id, username, password)
     return render_template("check-endpoint.html", ep_data=json.dumps(ep_on_ise, indent=10), result=result)
 
 if __name__ == '__main__':
