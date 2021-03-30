@@ -8,12 +8,10 @@ load_dotenv(path.join(basedir, '.env'))
 
 class Config:
     """Set Flask config variables."""
-
-    FLASK_ENV = 'development'
     TESTING = True
     DEBUG = True
 #    SECRET_KEY = environ.get('SECRET_KEY')
 #    STATIC_FOLDER = 'static'
     TEMPLATES_FOLDER = 'templates'
     SESSION_PERMANENT = False
-    SECRET_KEY = "abcdefg"
+    SECRET_KEY = "abcdefg" #test key

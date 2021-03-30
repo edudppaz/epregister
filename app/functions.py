@@ -9,14 +9,14 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 ## Define functions to use ##
 
-def check_ep_exists(ise_url, ep_mac, headers):
+def check_ep_exists(ise_url, ep_mac, headers, username, password):
     url = ise_url + "endpoint/?filter=mac.EQ."+ep_mac
     payload = {}
     response = requests.get(url, auth=(username, password), headers=headers, data=payload, verify=False)
     data = response.json()
     return data
 
-def register_ep_ise(ise_url, ep_mac, headers, ise_chosen_group_id):
+def register_ep_ise(ise_url, ep_mac, headers, ise_chosen_group_id, username, password):
     url = ise_url + "endpoint"
     payload = json.dumps({"ERSEndPoint" : {"name" : ep_mac,"description" : "ERS API-added endpoint","mac" : ep_mac,"staticGroupAssignment" : True, "groupId" : ise_chosen_group_id}})
     response = requests.post(url, auth=(username, password), headers=headers, data=payload, verify=False)
@@ -24,7 +24,7 @@ def register_ep_ise(ise_url, ep_mac, headers, ise_chosen_group_id):
     result = (f"Endpoint with mac {ep_mac} has been registered\n\n\n")
     return data, result
 
-def update_ep_ise(ise_url, mac, headers, endpoint_id, ise_chosen_group_id):
+def update_ep_ise(ise_url, mac, headers, endpoint_id, ise_chosen_group_id, username, password):
     url = ise_url + "endpoint/"+endpoint_id
     payload = json.dumps({"ERSEndPoint" : {"staticGroupAssignment" : True, "groupId" : ise_chosen_group_id}})
     response = requests.put(url, auth=(username, password), headers=headers, data=payload, verify=False)
